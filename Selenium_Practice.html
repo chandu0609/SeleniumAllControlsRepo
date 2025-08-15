@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Selenium Controls Playground</title>
+  <style>
+    body{font-family: Inter, system-ui, Arial; margin:20px; background:#f7f9fb; color:#111}
+    h1{font-size:22px;margin-bottom:6px}
+    section{background:white;border-radius:8px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(16,24,40,0.06)}
+    .row{display:flex;gap:16px;flex-wrap:wrap}
+    .col{flex:1 1 260px;min-width:220px}
+    label{display:block;margin-bottom:6px;font-size:13px}
+    input[type=text], input[type=password], textarea, select{width:100%;padding:8px;border:1px solid #d1d5db;border-radius:6px}
+    button{padding:8px 12px;border-radius:6px;border:1px solid #94a3b8;background:#eef2ff;cursor:pointer}
+    .controls-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+    .dropzone{height:120px;border:2px dashed #cbd5e1;border-radius:8px;display:flex;align-items:center;justify-content:center;background:#fbfdff}
+    .draggable{padding:8px 10px;border-radius:6px;background:#fffbeb;border:1px solid #f59e0b;cursor:grab;display:inline-block}
+    .tree{list-style:none;padding-left:16px}
+    .tree li{margin:6px 0}
+    .tree .toggle{cursor:pointer;margin-right:6px}
+    iframe{width:100%;height:220px;border:1px solid #e2e8f0;border-radius:6px}
+    .small{font-size:12px;color:#475569}
+    .badge{display:inline-block;padding:2px 8px;border-radius:999px;background:#e6f4ea;color:#1f6e3b;font-weight:600}
+    .inline{display:inline-flex;gap:8px;align-items:center}
+  </style>
+</head>
+<body>
+  <h1>Selenium Controls Playground</h1>
+  <p class="small">A single-file HTML page containing most common UI controls & behaviors for Selenium practice. Each element has an id for easy selectors.</p>
+
+  <section>
+    <h2>Basic Inputs (ids provided)</h2>
+    <div class="row">
+      <div class="col">
+        <label for="txtName">Text box — id: <code>txtName</code></label>
+        <input id="txtName" type="text" placeholder="Enter full name" />
+      </div>
+      <div class="col">
+        <label for="txtPassword">Password — id: <code>txtPassword</code></label>
+        <input id="txtPassword" type="password" value="secret" />
+      </div>
+      <div class="col">
+        <label for="txtEmail">Email — id: <code>txtEmail</code></label>
+        <input id="txtEmail" type="email" placeholder="you@example.com" />
+      </div>
+    </div>
+
+    <div style="margin-top:12px">
+      <label for="txtArea">Text area — id: <code>txtArea</code></label>
+      <textarea id="txtArea" rows="4">This is a sample multi-line text area.</textarea>
+    </div>
+
+    <div style="margin-top:12px" class="row">
+      <div class="col">
+        <label>Checkboxes</label>
+        <div class="inline">
+          <input id="chkAgree" type="checkbox" /> <label for="chkAgree">Agree to terms (id: chkAgree)</label>
+        </div>
+        <div class="inline">
+          <input id="chkNewsletter" type="checkbox" checked /> <label for="chkNewsletter">Subscribe (id: chkNewsletter)</label>
+        </div>
+      </div>
+
+      <div class="col">
+        <label>Radio buttons (name = gender)</label>
+        <div class="inline"><input id="rMale" name="gender" type="radio" value="male" /> <label for="rMale">Male</label></div>
+        <div class="inline"><input id="rFemale" name="gender" type="radio" value="female" checked /> <label for="rFemale">Female</label></div>
+        <div class="inline"><input id="rOther" name="gender" type="radio" value="other" /> <label for="rOther">Other</label></div>
+      </div>
+
+      <div class="col">
+        <label for="selCountry">Select / dropdown — id: <code>selCountry</code></label>
+        <select id="selCountry">
+          <option value="">-- Select country --</option>
+          <option value="us">United States</option>
+          <option value="ca">Canada</option>
+          <option value="in">India</option>
+          <option value="uk">United Kingdom</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="margin-top:12px" class="row">
+      <div class="col">
+        <label for="dateField">Date picker — id: <code>dateField</code></label>
+        <input id="dateField" type="date" />
+      </div>
+
+      <div class="col">
+        <label for="fileUpload">File upload — id: <code>fileUpload</code></label>
+        <input id="fileUpload" type="file" />
+      </div>
+
+      <div class="col">
+        <label for="numField">Number input — id: <code>numField</code></label>
+        <input id="numField" type="number" value="5" min="0" max="10" />
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Buttons, Links & Dynamic</h2>
+    <div class="row">
+      <div class="col">
+        <label>Buttons</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button id="btnPrimary">Primary (id: btnPrimary)</button>
+          <button id="btnSecondary" type="button">Secondary (id: btnSecondary)</button>
+          <button id="btnDisabled" disabled>Disabled button (id: btnDisabled)</button>
+        </div>
+      </div>
+
+      <div class="col">
+        <label>Links</label>
+        <a id="lnkHome" href="#" data-test="home-link">Home link (id: lnkHome)</a>
+      </div>
+
+      <div class="col">
+        <label>Dynamic content</label>
+        <div id="dynamicBox" class="badge">Count: 0</div>
+        <div style="margin-top:8px"><button id="btnIncrement">Increment (id: btnIncrement)</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Drag & Drop</h2>
+    <div class="row">
+      <div class="col">
+        <p class="small">Draggable items (class: <code>draggable</code>)</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div id="drag1" class="draggable" draggable="true">Drag item 1 (id: drag1)</div>
+          <div id="drag2" class="draggable" draggable="true">Drag item 2 (id: drag2)</div>
+          <div id="drag3" class="draggable" draggable="true">Drag item 3 (id: drag3)</div>
+        </div>
+      </div>
+
+      <div class="col">
+        <label>Drop zone — id: <code>dropzone</code></label>
+        <div id="dropzone" class="dropzone">Drop items here</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tree / Expandable Nodes</h2>
+    <p class="small">A simple tree view. Nodes have data-id attributes for selectors.</p>
+    <ul class="tree" id="sampleTree">
+      <li><span class="toggle" data-id="node-1">▶</span><span data-id="label-node-1">Root node (data-id=node-1)</span>
+        <ul class="tree" data-parent="node-1">
+          <li><span class="toggle" data-id="node-1-1">▶</span><span data-id="label-node-1-1">Child 1 (data-id=node-1-1)</span>
+            <ul class="tree" data-parent="node-1-1">
+              <li><span data-id="leaf-1-1-1">Leaf A (data-id=leaf-1-1-1)</span></li>
+              <li><span data-id="leaf-1-1-2">Leaf B (data-id=leaf-1-1-2)</span></li>
+            </ul>
+          </li>
+          <li><span data-id="leaf-1-2">Child 2 (data-id=leaf-1-2)</span></li>
+        </ul>
+      </li>
+      <li><span class="toggle" data-id="node-2">▶</span><span data-id="label-node-2">Another root (data-id=node-2)</span>
+        <ul class="tree" data-parent="node-2">
+          <li><span data-id="leaf-2-1">Leaf C (data-id=leaf-2-1)</span></li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Iframe (editable) & Modal Test</h2>
+    <div class="row">
+      <div class="col">
+        <label for="editorIframe">Editable iframe — id: <code>editorIframe</code></label>
+        <iframe id="editorIframe" title="editor"></iframe>
+        <div style="margin-top:8px"><button id="btnWriteIframe">Write sample HTML into iframe (id: btnWriteIframe)</button></div>
+      </div>
+
+      <div class="col">
+        <label>Modal</label>
+        <button id="btnOpenModal">Open modal (id: btnOpenModal)</button>
+        <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,.5);align-items:center;justify-content:center">
+          <div style="background:white;padding:18px;border-radius:10px;min-width:320px;box-shadow:0 6px 24px rgba(2,6,23,.2)">
+            <h3>Sample Modal</h3>
+            <p class="small">This modal can be used to test focus/visibility.</p>
+            <button id="btnCloseModal">Close modal (id: btnCloseModal)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Contenteditable & Rich interactions</h2>
+    <label for="richArea">Editable region — id: <code>richArea</code></label>
+    <div id="richArea" contenteditable="true" style="border:1px solid #e2e8f0;padding:10px;border-radius:6px;min-height:80px">This region is editable. Try selecting text, typing, and using keyboard events.</div>
+  </section>
+
+  <section>
+    <h2>Miscellaneous: Alerts, confirm, prompt</h2>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button id="btnAlert">Show alert</button>
+      <button id="btnConfirm">Show confirm</button>
+      <button id="btnPrompt">Show prompt</button>
+    </div>
+  </section>
+
+  <script>
+    // Dynamic counter
+    let count = 0;
+    document.getElementById('btnIncrement').addEventListener('click', ()=>{
+      count++; document.getElementById('dynamicBox').textContent = 'Count: '+count;
+    });
+
+    // Drag and drop behavior
+    const draggables = document.querySelectorAll('.draggable');
+    draggables.forEach(d => {
+      d.addEventListener('dragstart', (e)=>{
+        e.dataTransfer.setData('text/plain', e.target.id);
+      });
+    });
+    const dropzone = document.getElementById('dropzone');
+    dropzone.addEventListener('dragover', (e)=>{ e.preventDefault(); dropzone.style.background='#eef'; });
+    dropzone.addEventListener('dragleave', ()=>{ dropzone.style.background=''; });
+    dropzone.addEventListener('drop', (e)=>{
+      e.preventDefault(); dropzone.style.background='';
+      const id = e.dataTransfer.getData('text/plain');
+      const el = document.getElementById(id);
+      if(el){ dropzone.appendChild(el); }
+    });
+
+    // Tree toggles
+    document.querySelectorAll('#sampleTree .toggle').forEach(t => {
+      const id = t.getAttribute('data-id');
+      const childUl = document.querySelector('ul[data-parent="'+id+'"]');
+      if(childUl){ childUl.style.display='none'; }
+      t.addEventListener('click', ()=>{
+        const ul = document.querySelector('ul[data-parent="'+id+'"]');
+        if(!ul) return;
+        if(ul.style.display==='none'){ ul.style.display='block'; t.textContent='▼'; } else { ul.style.display='none'; t.textContent='▶'; }
+      });
+    });
+
+    // Iframe write sample
+    document.getElementById('btnWriteIframe').addEventListener('click', ()=>{
+      const iframe = document.getElementById('editorIframe');
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      doc.open();
+      doc.write(`<!doctype html><html><head><meta charset="utf-8"><title>Editor</title></head><body><h3 id="frameHeading">Hello from iframe</h3><p id="framePara">You can search for <code>frameHeading</code> or <code>framePara</code> inside the iframe.</p></body></html>`);
+      doc.close();
+    });
+
+    // Modal open/close for focus tests
+    const modal = document.getElementById('modal');
+    document.getElementById('btnOpenModal').addEventListener('click', ()=>{ modal.style.display='flex'; document.getElementById('btnCloseModal').focus(); });
+    document.getElementById('btnCloseModal').addEventListener('click', ()=>{ modal.style.display='none'; document.getElementById('btnOpenModal').focus(); });
+
+    // Alerts
+    document.getElementById('btnAlert').addEventListener('click', ()=> alert('This is an alert.'));
+    document.getElementById('btnConfirm').addEventListener('click', ()=> { const ok = confirm('Are you sure?'); alert('Confirm result: '+ok); });
+    document.getElementById('btnPrompt').addEventListener('click', ()=> { const val = prompt('Type something'); alert('You wrote: '+val); });
+
+    // Sample link handler
+    document.getElementById('lnkHome').addEventListener('click', (e)=>{ e.preventDefault(); alert('Home link clicked'); });
+
+    // small helper to expose current state on console for tests
+    window.testHelpers = {
+      resetAll: function(){ count=0; document.getElementById('dynamicBox').textContent='Count: 0'; document.getElementById('txtName').value=''; document.getElementById('txtEmail').value=''; document.getElementById('txtArea').value=''; }
+    };
+  </script>
+</body>
+</html>
