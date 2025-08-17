@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard - Selenium Playground</title>
+<style>
+body{font-family: Arial; margin:20px; background:#f7f9fb;}
+section{background:white;padding:16px;margin-bottom:16px;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.1);}
+label{display:block;margin-top:8px;}
+input,textarea,select,button{padding:6px;border:1px solid #ccc;border-radius:4px;}
+.draggable{padding:6px;background:#ffeeba;border:1px solid #f59e0b;display:inline-block;cursor:grab;}
+.dropzone{border:2px dashed #cbd5e1;height:100px;display:flex;align-items:center;justify-content:center;}
+iframe{width:100%;height:180px;border:1px solid #ccc;margin-top:8px;}
+</style>
+</head>
+<body>
+
+<h1>Dashboard - Selenium Controls Playground</h1>
+
+<section>
+<h2>Basic Inputs</h2>
+<label>Full Name</label>
+<input type="text" placeholder="Enter full name">
+
+<label>Password</label>
+<input type="password" placeholder="Enter password">
+
+<label>Email</label>
+<input type="email" placeholder="you@example.com">
+
+<label>Comments</label>
+<textarea rows="3">Some sample text</textarea>
+</section>
+
+<section>
+<h2>Checkboxes & Radio Buttons</h2>
+<label><input type="checkbox" value="agree"> Agree to terms</label>
+<label><input type="checkbox" value="subscribe"> Subscribe newsletter</label>
+
+<label><input type="radio" name="gender" value="male"> Male</label>
+<label><input type="radio" name="gender" value="female"> Female</label>
+</section>
+
+<section>
+<h2>Dropdown & Number / Date / File</h2>
+<select>
+<option value="">-- Select country --</option>
+<option value="us">USA</option>
+<option value="ca">Canada</option>
+<option value="in">India</option>
+</select>
+
+<input type="date">
+<input type="number" value="3" min="0" max="10">
+<input type="file">
+</section>
+
+<section>
+<h2>Buttons & Links</h2>
+<button>Primary</button>
+<button type="button">Secondary</button>
+<a href="#">Home link</a>
+<div id="counterBox">Count: 0</div>
+<button id="btnIncrement">Increment</button>
+</section>
+
+<section>
+<h2>Drag & Drop</h2>
+<div style="display:flex;gap:8px;">
+<div draggable="true" class="draggable">Drag 1</div>
+<div draggable="true" class="draggable">Drag 2</div>
+<div draggable="true" class="draggable">Drag 3</div>
+</div>
+<div class="dropzone">Drop items here</div>
+</section>
+
+<section>
+<h2>Tree Nodes</h2>
+<ul>
+<li>Root 1
+  <ul>
+    <li>Child 1
+      <ul>
+        <li>Leaf A</li>
+        <li>Leaf B</li>
+      </ul>
+    </li>
+    <li>Child 2</li>
+  </ul>
+</li>
+<li>Root 2
+  <ul>
+    <li>Leaf C</li>
+  </ul>
+</li>
+</ul>
+</section>
+
+<section>
+<h2>Iframe & Modal</h2>
+<iframe></iframe>
+<button id="btnOpenModal">Open Modal</button>
+<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;">
+<div style="background:white;padding:16px;border-radius:6px;">
+<h3>Sample Modal</h3>
+<button id="btnCloseModal">Close Modal</button>
+</div>
+</div>
+</section>
+
+<section>
+<h2>Contenteditable & Alerts</h2>
+<div contenteditable="true" style="border:1px solid #ccc;padding:8px;min-height:50px;">Editable region</div>
+<button id="btnAlert">Show Alert</button>
+<button id="btnConfirm">Show Confirm</button>
+<button id="btnPrompt">Show Prompt</button>
+</section>
+
+<script>
+// Dynamic counter
+let count=0;
+document.getElementById('btnIncrement').addEventListener('click',()=>{count++;document.getElementById('counterBox').textContent='Count: '+count;});
+
+// Drag & Drop
+document.querySelectorAll('.draggable').forEach(d=>d.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',e.target.textContent)));
+const dropzone=document.querySelector('.dropzone');
+dropzone.addEventListener('dragover',e=>e.preventDefault());
+dropzone.addEventListener('drop',e=>{
+e.preventDefault();
+const data=e.dataTransfer.getData('text/plain');
+dropzone.textContent=data+' dropped!';
+});
+
+// Modal
+const modal=document.getElementById('modal');
+document.getElementById('btnOpenModal').addEventListener('click',()=>{modal.style.display='flex';});
+document.getElementById('btnCloseModal').addEventListener('click',()=>{modal.style.display='none';});
+
+// Alerts
+document.getElementById('btnAlert').addEventListener('click',()=>alert('This is an alert.'));
+document.getElementById('btnConfirm').addEventListener('click',()=>{const r=confirm('Are you sure?');alert('Confirm result: '+r);});
+document.getElementById('btnPrompt').addEventListener('click',()=>{const r=prompt('Type something');alert('You wrote: '+r);});
+</script>
+
+</body>
+</html>
